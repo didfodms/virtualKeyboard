@@ -1,0 +1,1 @@
+{"version":3,"file":"style.css","mappings":"AAAA,EAGI,SAGJ,CAEA,IAGI,WAGJ","sources":["webpack://virtualkeyboard/./src/css/style.css"],"sourcesContent":["p {\r\n\r\n\r\n    color : red\r\n\r\n\r\n}\r\n\r\ndiv {\r\n\r\n\r\n    width : 100px;\r\n\r\n    \r\n}"],"names":[],"sourceRoot":""}
