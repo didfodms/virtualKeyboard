@@ -1,31 +1,49 @@
 * {
+  /* user-select -> 사용자의 더블 클릭, 드래그 제어 */
   user-select: none;
+  /* outline -> border 바깥 외곽선 */
   outline: none;
 }
 
+/* html의 theme 속성이 dark-mode인 것에 적용 */
 html[theme="dark-mode"] {
-  /* ! */
+  /*
+  filter -> 그래픽 효과를 요소에 적용 
+  invert 속성 -> 반전
+  hue-rotate 속성 -> 색조 변경
+  */
   filter: invert(100%) hue-rotate(180deg);
 }
 
+/* html이 dark-mode로 변경될 경우 배경색도 변경되기 위한 작업 */
 body {
   background-color: white;
 }
 
 .container {
   width: 1050px;
+  /*
+  margin : _의 _값 : 위아래 여백
+  _값이 auto일 경우, 위아래 여백 상관 x 그냥 가운데 정렬
+  */
   margin: auto;
 }
 
 .keyboard {
   background-color: gray;
-  color: gray;
   width: 1050px;
+  /* 키보드를 조금 둥근 사각형으로 */
   border-radius: 4px;
 }
 
 .row {
-  /* ! */
+  /* 
+  flex는 grid와 비슷한 기능을 제공
+  flex container, flex item이라는 개념을 잘 알아두자! 줄 수 있는 속성이 다르다!
+  flex container -> display : flex;를 해주면 자식 요소인 item들이 정렬됨
+  flex item : row
+  class이름이 row인 태그 안에 묶인 것들을 flex
+  */
   display: flex;
 }
 
@@ -33,28 +51,40 @@ body {
   width: 60px;
   height: 60px;
   margin: 5px;
+  /* 키보드 키 조금 둥근 사각형으로 */
   border-radius: 4px;
   background-color: white;
+  /* hover했을 때 커서 모양 pointer로 바꾸기 */
   cursor: pointer;
-  /* ! */
+  /* key(flex container)의 item을 flex */
   display: flex;
+  /*
+  align : 수직 축 방향 정렬
+  justify : 메인 축 방향 정렬 <- 가운데 기준 ->
+  */
   align-items: center;
   justify-content: center;
+  /* flex container의 여유 공간이 없으면 wrap 처리(밑으로 넘김) */
   flex-wrap: wrap;
   transition: 0.2s;
-  /* ! */
 }
 
 .key:hover {
-  background-color: lightgray;
+  background-color: gray;
 }
 
+/* 활성화된 키 (클릭한 키) */
 .key.active {
   background-color: #333;
-  color: #fff;
+  /* 얘는 무슨일을?? 글자색인줄 알았는데 안바뀜 */
+  color: white;
 }
 
 .key .two-value {
+  /*
+  width : 100% -> 쓸 수 있는 만큼 다 써라
+  width : auto -> 알아서 조절해라
+  */
   width: 100%;
   text-align: center;
 }
@@ -96,25 +126,38 @@ body {
 }
 
 .menu {
-  /* ! */
   display: flex;
 }
 
 .switch {
+  /*
+  position 속성 : 문서 상에 요소 배치 방법
+  relative : 요소 자기 자신으로 기준을 잡는다
+  */
   position: relative;
   width: 60px;
   height: 34px;
 }
 
+/* switch 클래스의 하위 태그 input (체크박스) */
 .switch input {
   display: none;
 }
 
 .slider {
+  /*
+  top, left, right, bottom 속성은
+  부모 클래스 switch에서 설정한 position 속성과 관련
+  position 속성의 relative를 기준으로 위치 설정하는 부분
+  */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  /*
+  이거 해주니까 슬라이더 영역이 생김
+  absolute -> 부모(조상) 요소 기준 배치
+  */
   position: absolute;
   cursor: pointer;
   background-color: gray;
@@ -122,9 +165,11 @@ body {
   transition: 0.4s;
 }
 
-/* ! */
+/* 의사 요소 하나 생성
+장식용 콘텐츠를 추가할 때 사용 */
 .slider::before {
   position: absolute;
+  /* ::before는 보통 content 속성과 짝지어 사용 */
   content: "";
   height: 26px;
   width: 26px;
@@ -135,60 +180,76 @@ body {
   border-radius: 50%;
 }
 
+/*
+input:checked -> input이 check되었을 때 활성화
++ : 인접 선택자, 앞에서 .slider인거 하나만 (regex로 생각)
+*/
 input:checked + .slider {
   background-color: black;
 }
 
 input:checked + .slider::before {
-  /* ! */
   transform: translateX(26px);
 }
 
 .select-box {
+  /* 자기 자신을 기준으로 */
   position: relative;
   margin-left: 60px;
-  height: 34px;
+  height: 30px;
 }
 
 .select-box select {
-  /* ! */
+  /*
+  em : 글자 크기 퍼센트
+  rem : root기준(html) em
+  */
   font-size: 0.9rem;
-  /* ! */
+  /* padding을 상하로 2px, 좌우로 5px */
   padding: 2px 5px;
   height: 34px;
   width: 200px;
 }
 
 .input-group {
+  /* margin을 상하로 100px, 좌우로 0px */
   margin: 100px 0px;
 }
 
 .input {
   border: none;
-  border-bottom: 2px solid lightgrey;
+  border-bottom: 2px solid lightgray;
   width: 1050px;
   height: 50px;
   font-size: 30px;
   text-align: center;
+  /*
+  block level element : 화면 전체 공간을 차지
+  inline element : 자기 자신이 위치한 만큼만을 차지
+  */
   display: block;
 }
 
 .error-message {
   color: #cc0033;
   font-size: 30px;
+  /* 행 간 간격 */
   line-height: 30px;
   margin-top: 10px;
   text-align: center;
 }
 
+/* errer msg 평소엔 안보이게 */
 .input-group .error-message {
   display: none;
 }
 
+/* error라는 클래스가 없는데 이게 뭘까?? 아마 js에서 처리하는 부분? */
 .error input {
   border-bottom: 2px solid red;
 }
 
 .error .error-message {
+  /* none이었던 것을 block level element로 표시 */
   display: block;
 }

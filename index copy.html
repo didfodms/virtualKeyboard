@@ -1,44 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html theme="">
   <head> </head>
 
   <body>
     <div class="container" id="container">
-      <!-- 다크 모드 스위치, 폰트 설정 메뉴를 묶어주는 div 태그 -->
       <div class="menu">
-        <!-- label 태그의 input 자식 태그 : label을 누르면 input이 활성화 -->
         <label class="switch">
           <input id="switch" type="checkbox" />
           <span class="slider"></span>
         </label>
-        <!-- 원하는 font를 선택하는 태그 -->
         <div class="select-box">
-          <!-- label의 for 속성 = 자식 태그의 id값 -> label을 누르면 자식 태그 활성화 -->
           <label for="font">Font:</label>
           <select id="font">
-            <!-- option 태그의 value 속성 : 서버로 제출 -->
             <option value="" disabled selected>Choose Font</option>
-            <option value="Comic Sans Ms, Comic Sans, cursive">Font 1</option>
+            <option value="Comic Sans MS, Comic Sans, cursive">Font 1</option>
             <option value="Arial Narrow, sans-serif">Font 2</option>
             <option value="Chalkduster, fantasy">Font 3</option>
           </select>
         </div>
       </div>
-      <!-- 직접 키보드를 입력할 수 있는 div 태그 -->
       <div class="input-group" id="input-group">
-        <!-- input 태그의 autocomplete 속성 : 자동 완성 기능 제공 여부 -->
         <input id="input" class="input" type="text" autocomplete="off" />
-        <!-- 한글 입력시 에러 메세지 div 태그 -->
         <div class="error-message">한글 입력 불가</div>
       </div>
-      <!-- 키보드 UI -->
       <div class="keyboard" id="keyboard">
-        <!-- 키보드 UI의 1번째 행 -->
         <div class="row">
-          <!-- data- 속성은 js에서 dataset 객체를 통해 값을 읽어들이기 위해 사용 -->
-          <!-- data- 뒤 문구는 내가 정함. 나중에 camelCase로 변경됨 -->
           <div class="key" data-code="Backquote" data-val="`">
-            <!-- class = two-value : 두 개의 문자가 들어있는 키들의 집합 -->
             <span class="two-value">~</span>
             <span class="two-value">`</span>
           </div>
@@ -90,7 +77,6 @@
             <span class="two-value">+</span>
             <span class="two-value">=</span>
           </div>
-          <!-- 특수키는 class = key의 하위 클래스로 정체성(?) 지정 -->
           <div
             class="key back-space-key"
             data-code="Backspace"
@@ -99,9 +85,7 @@
             Backspace
           </div>
         </div>
-        <!-- 키보드 UI의 2번째 행 -->
         <div class="row">
-          <!-- tab키는 어차피 입력칸에 안보이니까 js 전달에 사용되는 data- 속성은 사용하지 않은듯 -->
           <div class="key tab-key">Tab</div>
           <div class="key" data-code="KeyQ" data-val="q">Q</div>
           <div class="key" data-code="KeyW" data-val="w">W</div>
@@ -126,9 +110,7 @@
             <span class="two-value">\</span>
           </div>
         </div>
-        <!-- 키보드 UI의 3번째 행 -->
         <div class="row">
-          <!-- 이건 왜 data-속성 안썼는지 모르겠음 -> 입력란에 capslock은 표시되지 않으니깐? -->
           <div class="key caps-lock-key">CapsLock</div>
           <div class="key" data-code="KeyA" data-val="a">A</div>
           <div class="key" data-code="KeyS" data-val="s">S</div>
@@ -147,12 +129,10 @@
             <span class="two-value">"</span>
             <span class="two-value">'</span>
           </div>
-          <!-- 이것도 data-code는 주면서 data-val은 왜 안줬을까? -> 누르면 색깔바뀌도록 해야하니깐? -->
           <div class="key enter-key" data-code="Enter">Enter</div>
         </div>
-        <!-- 키보드 UI의 4번째 행 -->
         <div class="row">
-          <div class="key left-shift-key" data-code="ShiftLeft">ShiftLeft</div>
+          <div class="key left-shift-key" data-code="ShiftLeft">Shift</div>
           <div class="key" data-code="KeyZ" data-val="z">Z</div>
           <div class="key" data-code="KeyX" data-val="x">X</div>
           <div class="key" data-code="KeyC" data-val="c">C</div>
@@ -161,24 +141,20 @@
           <div class="key" data-code="KeyN" data-val="n">N</div>
           <div class="key" data-code="KeyM" data-val="m">M</div>
           <div class="key" data-code="Comma" data-val=",">
-            <span class="two-value">&lt;</span>
+            <span class="two-value"> &lt; </span>
             <span class="two-value">,</span>
           </div>
           <div class="key" data-code="Period" data-val=".">
-            <span class="two-value">&gt;</span>
+            <span class="two-value"> &gt; </span>
             <span class="two-value">.</span>
           </div>
           <div class="key" data-code="Slash" data-val="/">
             <span class="two-value">?</span>
             <span class="two-value">/</span>
           </div>
-          <div class="key right-shift-key" data-code="ShiftRight">
-            ShiftRight
-          </div>
+          <div class="key right-shift-key" data-code="ShiftRight">Shift</div>
         </div>
-        <!-- 키보드 UI의 5번째 행 -->
         <div class="row">
-          <!-- mac 몰라서 class = fn-key 모르겠음 -->
           <div class="key fn-key">Ctrl</div>
           <div class="key fn-key">-</div>
           <div class="key fn-key">Alt</div>
@@ -186,8 +162,8 @@
             Space
           </div>
           <div class="key fn-key">Alt</div>
-          <div class="key fn-key">-</div>
           <div class="key fn-key">Fn</div>
+          <div class="key fn-key">-</div>
           <div class="key fn-key">Ctrl</div>
         </div>
       </div>
