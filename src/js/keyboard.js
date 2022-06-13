@@ -4,6 +4,10 @@ export class Keyboard {
   #fontSelectEl; //font selecter element
   #containerEl; //container element로 부터 하위 element 탐색하는 방식으로..
   #keyboardEl; //keyboard element
+  #inputGroupEl; //input-group element
+  #inputEl; //input element
+  #keyPress = false;
+  #mouseDown = false;
 
   constructor() {
     this.#assignElement();
@@ -13,38 +17,79 @@ export class Keyboard {
   // #switchEl에 switch element 할당하기
   #assignElement() {
     this.#containerEl = document.getElementById("container");
-    /*
-    this.#switchEl = document.getElementById("switch");
-    this.#fontSelectEl = document.getElementById("font");
-    위처럼 document에서 탐색하는 방법보다 container에서부터 탐색하는 게 비용이 적음!!
-    */
     this.#switchEl = this.#containerEl.querySelector("#switch");
     this.#fontSelectEl = this.#containerEl.querySelector("#font");
     this.#keyboardEl = this.#containerEl.querySelector("#keyboard");
+    this.#inputGroupEl = this.#containerEl.querySelector("#input-group");
+    this.#inputEl = this.#inputGroupEl.querySelector("#input");
   }
 
   #addEvent() {
-    // 이벤트 핸들러는 따로 관리하는게 좋음 -> 화살표 함수보다는 따로 함수 만들기
     this.#switchEl.addEventListener("change", this.#onChangeTheme);
     this.#fontSelectEl.addEventListener("change", this.#onChangeFont);
+    document.addEventListener("keydown", this.#onKeyDown.bind(this));
+    document.addEventListener("keyup", this.#onKeyUp.bind(this));
+    this.#inputEl.addEventListener("input", this.#onInput);
+    this.#keyboardEl.addEventListener(
+      "mousedown",
+      this.#onMouseDown.bind(this)
+    );
+    document.addEventListener("mouseup", this.#onMouseUp.bind(this));
+  }
 
-    document.addEventListener("keydown", (event) => {
-      console.log(event.code);
-      // `(백틱)을 사용한 템플릿 문자열
-      // keydown시, 해당 key에 active 클래스 추가
-      this.#keyboardEl
-        .querySelector(`[data-code=${event.code}]`)
-        ?.classList.add("active");
-    });
+  #onMouseUp(event) {
+    if (this.#keyPress) return;
+    this.#mouseDown = false;
 
-    document.addEventListener("keyup", (event) => {
-      //console.log("keyup");
-      // keyup시, 해당 key의 active 클래스 제거
-      // ?. (옵셔널 체이닝) : 존재하면 실행, 안하면 undefined 리턴
-      this.#keyboardEl
-        .querySelector(`[data-code=${event.code}]`)
-        ?.classList.remove("active");
-    });
+    // closest() 엘리먼트에 가장 가까운 조상 찾기
+    const keyEl = event.target.closest("div.key");
+    // !!undefined = false (undefined을 bool으로 타입 캐스팅)
+    const isActive = !!keyEl?.classList.contains("active");
+    // dataset.val을 하면 data-val을 가져오는 효과
+    const val = keyEl?.dataset.val;
+    if (isActive && !!val && val !== "Space" && val !== "Backspace") {
+      this.#inputEl.value += val;
+    }
+    if (isActive && val === "Space") {
+      this.#inputEl.value += " ";
+    }
+    if (isActive && val === "Backspace") {
+      this.#inputEl.value = this.#inputEl.value.slice(0, -1);
+    }
+    this.#keyboardEl.querySelector(".active")?.classList.remove("active");
+  }
+
+  #onMouseDown(event) {
+    if (this.#keyPress) return;
+    this.#mouseDown = true;
+    event.target.closest("div.key")?.classList.add("active");
+  }
+
+  #onInput(event) {
+    event.target.value = event.target.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/, "");
+  }
+
+  #onKeyDown(event) {
+    if (this.#mouseDown) return;
+    this.#keyPress = true;
+
+    this.#inputGroupEl.classList.toggle(
+      "error",
+      "Process" === event.key ? true : false
+    );
+
+    this.#keyboardEl
+      .querySelector(`[data-code=${event.code}]`)
+      ?.classList.add("active");
+  }
+
+  #onKeyUp(event) {
+    if (this.#mouseDown) return;
+    this.#keyPress = false;
+
+    this.#keyboardEl
+      .querySelector(`[data-code=${event.code}]`)
+      ?.classList.remove("active");
   }
 
   #onChangeTheme(event) {
