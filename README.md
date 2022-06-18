@@ -1,4 +1,4 @@
-# react 프로젝트 1
+# virtualKeyboard (react 프로젝트 1)
 ---
 가상 키보드를 만듭니다.
 
@@ -6,3 +6,4 @@
 + 다크 모드 기능 지원
 + 폰트 변경 기능 지원
 + key/mouse event
++ node.js 환경, eslint, prettier
